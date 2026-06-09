@@ -25,7 +25,7 @@ class RestructuringStrategy(BaseStrategy):
     def tier(self) -> int:
         return 2
 
-    def apply(self, text: str) -> tuple[str, list[Change]]:
+    def apply(self, text: str, normalized_text: str | None = None) -> tuple[str, list[Change]]:
         changes: list[Change] = []
         result = text
         for pattern, replacement in _IMPERATIVE_PATTERNS:

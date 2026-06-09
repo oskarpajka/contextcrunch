@@ -15,7 +15,7 @@ class WhitespaceStrategy(BaseStrategy):
     def tier(self) -> int:
         return 1
 
-    def apply(self, text: str) -> tuple[str, list[Change]]:
+    def apply(self, text: str, normalized_text: str | None = None) -> tuple[str, list[Change]]:
         changes: list[Change] = []
         result = re.sub(r" {2,}", " ", text)
         if result != text:

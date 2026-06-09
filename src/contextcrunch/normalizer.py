@@ -21,6 +21,11 @@ def normalize_for_matching(text: str) -> str:
     return result.lower()
 
 
+def normalize_for_matching_preserve_positions(text: str) -> str:
+    result = normalize_unicode(text)
+    return result.lower()
+
+
 def normalize(text: str) -> str:
     result = normalize_unicode(text)
     result = normalize_whitespace(result)

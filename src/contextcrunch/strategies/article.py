@@ -22,7 +22,7 @@ class ArticleRemovalStrategy(BaseStrategy):
     def tier(self) -> int:
         return 1
 
-    def apply(self, text: str) -> tuple[str, list[Change]]:
+    def apply(self, text: str, normalized_text: str | None = None) -> tuple[str, list[Change]]:
         changes: list[Change] = []
         protected_zones: list[tuple[int, int]] = []
         for pat in _PRESERVED_PATTERNS:
