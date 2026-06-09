@@ -1,0 +1,58 @@
+from __future__ import annotations
+
+from contextcrunch.strategies.base import BaseStrategy
+from contextcrunch.strategies.filler import FillerStrategy
+from contextcrunch.strategies.contraction import ContractionStrategy
+from contextcrunch.strategies.verbose import VerboseStrategy
+from contextcrunch.strategies.synonym import SynonymStrategy
+from contextcrunch.strategies.restructuring import RestructuringStrategy
+from contextcrunch.strategies.whitespace import WhitespaceStrategy
+from contextcrunch.strategies.normalize import NormalizeStrategy
+
+
+STRATEGIES: dict[int, list[BaseStrategy]] = {
+    1: [
+        NormalizeStrategy(),
+        WhitespaceStrategy(),
+        FillerStrategy(),
+        VerboseStrategy(),
+    ],
+    2: [
+        ContractionStrategy(),
+        SynonymStrategy(),
+        RestructuringStrategy(),
+    ],
+    3: [],
+}
+
+
+def get_strategies(level: str) -> list[BaseStrategy]:
+    tiers: list[int]
+    match level:
+        case "safe":
+            tiers = [1]
+        case "balanced":
+            tiers = [1, 2]
+        case "aggressive":
+            tiers = [1, 2, 3]
+        case _:
+            tiers = [1]
+
+    result: list[BaseStrategy] = []
+    for tier in tiers:
+        result.extend(STRATEGIES.get(tier, []))
+    return result
+
+
+__all__ = [
+    "BaseStrategy",
+    "FillerStrategy",
+    "ContractionStrategy",
+    "VerboseStrategy",
+    "SynonymStrategy",
+    "RestructuringStrategy",
+    "WhitespaceStrategy",
+    "NormalizeStrategy",
+    "STRATEGIES",
+    "get_strategies",
+]
