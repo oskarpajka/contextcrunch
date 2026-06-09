@@ -14,7 +14,7 @@ from contextcrunch.types import CompressionResult, Change, ProtectedSpan
 from contextcrunch.detector import detect
 from contextcrunch.protector import protect
 from contextcrunch.restorer import restore
-from contextcrunch.normalizer import normalize, normalize_for_matching
+from contextcrunch.normalizer import normalize, normalize_for_matching, normalize_whitespace
 from contextcrunch.token_counter import get_tokenizer
 from contextcrunch.strategies import get_strategies
 
@@ -76,6 +76,7 @@ def crunch(
                         break
 
     final_text = restore(working_text, replacements)
+    final_text = normalize_whitespace(final_text)
 
     compressed_tokens = tok.count(final_text)
 

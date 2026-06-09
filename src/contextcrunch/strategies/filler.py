@@ -18,7 +18,11 @@ class FillerStrategy(BaseStrategy):
             data.get("filler_phrases", []), key=len, reverse=True
         )
         self._phrase_pattern = re.compile(
-            r"\b(" + "|".join(re.escape(p) for p in self._phrases) + r")\b",
+            r"\s*(" + "|".join(re.escape(p) for p in self._phrases) + r")\s*",
+            re.IGNORECASE,
+        )
+        self._word_pattern = re.compile(
+            r"\s*\b(" + "|".join(re.escape(w) for w in sorted(self._words, key=len, reverse=True)) + r")\b\s*",
             re.IGNORECASE,
         )
 
@@ -34,36 +38,20 @@ class FillerStrategy(BaseStrategy):
         changes: list[Change] = []
         result = text
 
-        for match in self._phrase_pattern.finditer(result):
+        matches = list(self._phrase_pattern.finditer(result))
+        for match in reversed(matches):
             original = match.group()
             start, end = match.span()
-            result = result[:start] + result[end:]
-            changes.append(self._make_change(original, "", start, end))
-            result, changes = _adjust_spans(result, changes, start, end - start)
+            replacement = " " if start > 0 and end < len(result) else ""
+            changes.append(self._make_change(original.strip(), "", start, end))
+            result = result[:start] + replacement + result[end:]
 
-        tokens = result.split()
-        new_tokens: list[str] = []
-        offset = 0
-        for token in tokens:
-            word = re.sub(r"[^\w]", "", token).lower()
-            if word in self._words:
-                token_start = result.find(token, offset)
-                if token_start != -1:
-                    before = result[:token_start]
-                    after = result[token_start + len(token):]
-                    leading_space = before.endswith(" ")
-                    if leading_space:
-                        before = before[:-1]
-                        token_start -= 1
-                    changes.append(self._make_change(token, "", token_start, token_start + len(token) + (1 if leading_space else 0)))
-                    result = before + after
-                    offset = len(before)
-                    continue
-            offset += len(token) + 1
-            new_tokens.append(token)
+        matches = list(self._word_pattern.finditer(result))
+        for match in reversed(matches):
+            original = match.group()
+            start, end = match.span()
+            replacement = " " if start > 0 and end < len(result) else ""
+            changes.append(self._make_change(original.strip(), "", start, end))
+            result = result[:start] + replacement + result[end:]
 
         return result, changes
-
-
-def _adjust_spans(text: str, changes: list[Change], removed_start: int, removed_len: int) -> tuple[str, list[Change]]:
-    return text, changes

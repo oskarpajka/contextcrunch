@@ -21,24 +21,12 @@
         "honestly",
         "frankly",
         "admittedly",
-        "frankly",
         "perhaps",
-        "maybe",
-        "somehow",
         "somewhat",
         "anyway",
         "anyways",
-        "like",
-        "well",
-        "right",
-        "okay",
-        "ok",
-        "so",
-        "now",
-        "look",
-        "see",
-        "basically",
-        "actually"
+        "please",
+        "kindly"
     ],
     "filler_phrases": [
         "you know",
@@ -54,6 +42,10 @@
         "for all intents and purposes",
         "by the way",
         "as you might expect",
-        "as one might expect"
+        "as one might expect",
+        "as an expert",
+        "as a senior",
+        "as a professional",
+        "as a specialist"
     ]
 }

@@ -95,6 +95,7 @@
     "ensures": "guarantees",
     "ensured": "guaranteed",
     "ensuring": "guaranteeing",
+    "ensure that": "guarantee",
     "initiate": "start",
     "initiates": "starts",
     "initiated": "started",
@@ -127,7 +128,6 @@
     "authorization": "authz",
     "environment": "env",
     "development": "dev",
-    "production": "prod",
     "administration": "admin",
     "administrator": "admin"
 }

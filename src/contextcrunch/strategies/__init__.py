@@ -8,6 +8,7 @@ from contextcrunch.strategies.synonym import SynonymStrategy
 from contextcrunch.strategies.restructuring import RestructuringStrategy
 from contextcrunch.strategies.whitespace import WhitespaceStrategy
 from contextcrunch.strategies.normalize import NormalizeStrategy
+from contextcrunch.strategies.article import ArticleRemovalStrategy
 
 
 STRATEGIES: dict[int, list[BaseStrategy]] = {
@@ -16,6 +17,7 @@ STRATEGIES: dict[int, list[BaseStrategy]] = {
         WhitespaceStrategy(),
         FillerStrategy(),
         VerboseStrategy(),
+        ArticleRemovalStrategy(),
     ],
     2: [
         ContractionStrategy(),
@@ -53,6 +55,7 @@ __all__ = [
     "RestructuringStrategy",
     "WhitespaceStrategy",
     "NormalizeStrategy",
+    "ArticleRemovalStrategy",
     "STRATEGIES",
     "get_strategies",
 ]
